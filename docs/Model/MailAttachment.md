@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | [**\SplFileObject**](\SplFileObject.md) | Contents of the attached file |
-**filename** | **string** | Optional filename to specify for the attachment. | [optional]
+**filename** | **string** | The filename of the attached file. |
+**data** | **string** | The file contents base64 encoded |
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)
