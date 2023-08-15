@@ -103,12 +103,11 @@ Class | Method | HTTP request | Description
 
 - [DenyRuleNew](docs/Model/DenyRuleNew.md)
 - [DenyRuleRecord](docs/Model/DenyRuleRecord.md)
+- [DenyRuleRecordAllOf](docs/Model/DenyRuleRecordAllOf.md)
 - [EmailAddress](docs/Model/EmailAddress.md)
-- [EmailAddressName](docs/Model/EmailAddressName.md)
 - [GenericResponse](docs/Model/GenericResponse.md)
 - [GetMailOrders401Response](docs/Model/GetMailOrders401Response.md)
 - [GetStats200ResponseInner](docs/Model/GetStats200ResponseInner.md)
-- [MailAttachment](docs/Model/MailAttachment.md)
 - [MailBlockClickHouse](docs/Model/MailBlockClickHouse.md)
 - [MailBlockRspamd](docs/Model/MailBlockRspamd.md)
 - [MailBlocks](docs/Model/MailBlocks.md)

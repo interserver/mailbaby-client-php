@@ -1,10 +1,10 @@
-# # EmailAddressName
+# # DenyRuleRecordAllOf
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**email** | **string** | The email address. |
-**name** | **string** | Name to use for the sending contact. | [optional]
+**id** | **int** | The deny rule Id number. |
+**created** | **\DateTime** | the date the rule was created. |
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)
