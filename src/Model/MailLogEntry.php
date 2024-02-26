@@ -543,10 +543,10 @@ class MailLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
      *
      * @return string
      */
-    public function getId()
+    /*public function getId()
     {
         return $this->container['id'];
-    }
+    }*/
 
     /**
      * Sets id
@@ -555,7 +555,7 @@ class MailLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
      *
      * @return self
      */
-    public function setId($id)
+    /*public function setId($id)
     {
         if (is_null($id)) {
             throw new \InvalidArgumentException('non-nullable id cannot be null');
@@ -563,7 +563,7 @@ class MailLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->container['id'] = $id;
 
         return $this;
-    }
+    }*/
 
     /**
      * Gets from
