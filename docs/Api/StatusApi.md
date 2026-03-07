@@ -1,5 +1,7 @@
 # Interserver\Mailbaby\StatusApi
 
+Service Status
+
 All URIs are relative to https://api.mailbaby.net, except if the operation defines another base path.
 
 | Method | HTTP request | Description |

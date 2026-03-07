@@ -1,10 +1,10 @@
-# # GetMailOrders401Response
+# # EmailAddressTypes
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**code** | **string** |  |
-**message** | **string** |  |
+**email** | **string** | The email address. |
+**name** | **string** | Name to use for the sending contact. | [optional]
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)
