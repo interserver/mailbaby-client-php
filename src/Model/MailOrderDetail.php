@@ -1,6 +1,6 @@
 <?php
 /**
- * DenyRuleRecord
+ * MailOrderDetail
  *
  * PHP version 8.1
  *
@@ -33,16 +33,16 @@ use \ArrayAccess;
 use \Interserver\Mailbaby\ObjectSerializer;
 
 /**
- * DenyRuleRecord Class Doc Comment
+ * MailOrderDetail Class Doc Comment
  *
  * @category Class
- * @description A complete deny rule record as returned by &#x60;GET /mail/rules&#x60;.  Combines the rule definition fields (&#x60;DenyRuleNew&#x60;) with server-assigned metadata (&#x60;id&#x60; and &#x60;created&#x60;).  The &#x60;id&#x60; value is required by &#x60;DELETE /mail/rules/{ruleId}&#x60;.
+ * @description Extended mail order record including the current SMTP password.  Returned by &#x60;GET /mail/{id}&#x60;.  The &#x60;username&#x60; and &#x60;password&#x60; fields can be used to authenticate directly against &#x60;relay.mailbaby.net:25&#x60; via SMTP AUTH if you prefer to send via a native SMTP client rather than the REST API.
  * @package  Interserver\Mailbaby
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class DenyRuleRecord implements ModelInterface, ArrayAccess, \JsonSerializable
+class MailOrderDetail implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -51,7 +51,7 @@ class DenyRuleRecord implements ModelInterface, ArrayAccess, \JsonSerializable
      *
      * @var string
      */
-    protected static $openAPIModelName = 'DenyRuleRecord';
+    protected static $openAPIModelName = 'MailOrderDetail';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -59,11 +59,11 @@ class DenyRuleRecord implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $openAPITypes = [
-        'type' => 'string',
-        'data' => 'string',
-        'id' => 'string',
-        'created' => '\DateTime',
-        'user' => 'string'
+        'id' => 'int',
+        'status' => 'string',
+        'username' => 'string',
+        'password' => 'string',
+        'comment' => 'string'
     ];
 
     /**
@@ -74,11 +74,11 @@ class DenyRuleRecord implements ModelInterface, ArrayAccess, \JsonSerializable
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'type' => null,
-        'data' => null,
-        'id' => null,
-        'created' => 'date-time',
-        'user' => null
+        'id' => 'int32',
+        'status' => null,
+        'username' => null,
+        'password' => null,
+        'comment' => null
     ];
 
     /**
@@ -87,11 +87,11 @@ class DenyRuleRecord implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'type' => false,
-        'data' => false,
         'id' => false,
-        'created' => false,
-        'user' => false
+        'status' => false,
+        'username' => false,
+        'password' => false,
+        'comment' => false
     ];
 
     /**
@@ -180,11 +180,11 @@ class DenyRuleRecord implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'type' => 'type',
-        'data' => 'data',
         'id' => 'id',
-        'created' => 'created',
-        'user' => 'user'
+        'status' => 'status',
+        'username' => 'username',
+        'password' => 'password',
+        'comment' => 'comment'
     ];
 
     /**
@@ -193,11 +193,11 @@ class DenyRuleRecord implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'type' => 'setType',
-        'data' => 'setData',
         'id' => 'setId',
-        'created' => 'setCreated',
-        'user' => 'setUser'
+        'status' => 'setStatus',
+        'username' => 'setUsername',
+        'password' => 'setPassword',
+        'comment' => 'setComment'
     ];
 
     /**
@@ -206,11 +206,11 @@ class DenyRuleRecord implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'type' => 'getType',
-        'data' => 'getData',
         'id' => 'getId',
-        'created' => 'getCreated',
-        'user' => 'getUser'
+        'status' => 'getStatus',
+        'username' => 'getUsername',
+        'password' => 'getPassword',
+        'comment' => 'getComment'
     ];
 
     /**
@@ -254,25 +254,6 @@ class DenyRuleRecord implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-    public const TYPE_DOMAIN = 'domain';
-    public const TYPE_EMAIL = 'email';
-    public const TYPE_STARTSWITH = 'startswith';
-    public const TYPE_DESTINATION = 'destination';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getTypeAllowableValues()
-    {
-        return [
-            self::TYPE_DOMAIN,
-            self::TYPE_EMAIL,
-            self::TYPE_STARTSWITH,
-            self::TYPE_DESTINATION,
-        ];
-    }
 
     /**
      * Associative array for storing property values
@@ -289,11 +270,11 @@ class DenyRuleRecord implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('type', $data ?? [], null);
-        $this->setIfExists('data', $data ?? [], null);
         $this->setIfExists('id', $data ?? [], null);
-        $this->setIfExists('created', $data ?? [], null);
-        $this->setIfExists('user', $data ?? [], null);
+        $this->setIfExists('status', $data ?? [], null);
+        $this->setIfExists('username', $data ?? [], null);
+        $this->setIfExists('password', $data ?? [], null);
+        $this->setIfExists('comment', $data ?? [], null);
     }
 
     /**
@@ -323,26 +304,17 @@ class DenyRuleRecord implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['type'] === null) {
-            $invalidProperties[] = "'type' can't be null";
-        }
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!is_null($this->container['type']) && !in_array($this->container['type'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'type', must be one of '%s'",
-                $this->container['type'],
-                implode("', '", $allowedValues)
-            );
-        }
-
-        if ($this->container['data'] === null) {
-            $invalidProperties[] = "'data' can't be null";
-        }
         if ($this->container['id'] === null) {
             $invalidProperties[] = "'id' can't be null";
         }
-        if ($this->container['created'] === null) {
-            $invalidProperties[] = "'created' can't be null";
+        if ($this->container['status'] === null) {
+            $invalidProperties[] = "'status' can't be null";
+        }
+        if ($this->container['username'] === null) {
+            $invalidProperties[] = "'username' can't be null";
+        }
+        if ($this->container['password'] === null) {
+            $invalidProperties[] = "'password' can't be null";
         }
         return $invalidProperties;
     }
@@ -360,73 +332,9 @@ class DenyRuleRecord implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->container['type'];
-    }
-
-    /**
-     * Sets type
-     *
-     * @param string $type The type of deny rule.
-     *
-     * @return self
-     */
-    public function setType($type)
-    {
-        if (is_null($type)) {
-            throw new \InvalidArgumentException('non-nullable type cannot be null');
-        }
-        $allowedValues = $this->getTypeAllowableValues();
-        if (!in_array($type, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'type', must be one of '%s'",
-                    $type,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['type'] = $type;
-
-        return $this;
-    }
-
-    /**
-     * Gets data
-     *
-     * @return string
-     */
-    public function getData()
-    {
-        return $this->container['data'];
-    }
-
-    /**
-     * Sets data
-     *
-     * @param string $data The value to match against, interpreted according to `type`: a full email address for `email`/`destination`, a domain name for `domain`, or an alphanumeric prefix string for `startswith`.
-     *
-     * @return self
-     */
-    public function setData($data)
-    {
-        if (is_null($data)) {
-            throw new \InvalidArgumentException('non-nullable data cannot be null');
-        }
-        $this->container['data'] = $data;
-
-        return $this;
-    }
-
-    /**
      * Gets id
      *
-     * @return string
+     * @return int
      */
     public function getId()
     {
@@ -436,7 +344,7 @@ class DenyRuleRecord implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets id
      *
-     * @param string $id The numeric ID of the deny rule, as a string.  Pass this as `ruleId` to `DELETE /mail/rules/{ruleId}` to remove the rule.
+     * @param int $id The unique numeric ID of the mail order.  Used as the `id` parameter on sending calls, log queries, and stats queries.
      *
      * @return self
      */
@@ -451,55 +359,109 @@ class DenyRuleRecord implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
-     * Gets created
+     * Gets status
      *
-     * @return \DateTime
+     * @return string
      */
-    public function getCreated()
+    public function getStatus()
     {
-        return $this->container['created'];
+        return $this->container['status'];
     }
 
     /**
-     * Sets created
+     * Sets status
      *
-     * @param \DateTime $created The timestamp when the rule was created.
+     * @param string $status The current order status.  Only `active` orders can be used for sending. `canceled` orders are retained for history but cannot send.
      *
      * @return self
      */
-    public function setCreated($created)
+    public function setStatus($status)
     {
-        if (is_null($created)) {
-            throw new \InvalidArgumentException('non-nullable created cannot be null');
+        if (is_null($status)) {
+            throw new \InvalidArgumentException('non-nullable status cannot be null');
         }
-        $this->container['created'] = $created;
+        $this->container['status'] = $status;
 
         return $this;
     }
 
     /**
-     * Gets user
+     * Gets username
      *
-     * @return string|null
+     * @return string
      */
-    public function getUser()
+    public function getUsername()
     {
-        return $this->container['user'];
+        return $this->container['username'];
     }
 
     /**
-     * Sets user
+     * Sets username
      *
-     * @param string|null $user Optional SMTP username of the mail order to associate this rule with (e.g. `mb20682`).  If omitted the first active order is used.  Valid usernames are the `username` values returned by `GET /mail`.
+     * @param string $username The SMTP AUTH username for this order, always in the format `mb<id>`. Use together with the password from `GET /mail/{id}` to authenticate directly against `relay.mailbaby.net:25` if needed.
      *
      * @return self
      */
-    public function setUser($user)
+    public function setUsername($username)
     {
-        if (is_null($user)) {
-            throw new \InvalidArgumentException('non-nullable user cannot be null');
+        if (is_null($username)) {
+            throw new \InvalidArgumentException('non-nullable username cannot be null');
         }
-        $this->container['user'] = $user;
+        $this->container['username'] = $username;
+
+        return $this;
+    }
+
+    /**
+     * Gets password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->container['password'];
+    }
+
+    /**
+     * Sets password
+     *
+     * @param string $password The current SMTP AUTH password for this mail order.  Use with the `username` field to authenticate against `relay.mailbaby.net:25`.
+     *
+     * @return self
+     */
+    public function setPassword($password)
+    {
+        if (is_null($password)) {
+            throw new \InvalidArgumentException('non-nullable password cannot be null');
+        }
+        $this->container['password'] = $password;
+
+        return $this;
+    }
+
+    /**
+     * Gets comment
+     *
+     * @return string|null
+     */
+    public function getComment()
+    {
+        return $this->container['comment'];
+    }
+
+    /**
+     * Sets comment
+     *
+     * @param string|null $comment Optional human-readable note associated with the order.
+     *
+     * @return self
+     */
+    public function setComment($comment)
+    {
+        if (is_null($comment)) {
+            throw new \InvalidArgumentException('non-nullable comment cannot be null');
+        }
+        $this->container['comment'] = $comment;
 
         return $this;
     }

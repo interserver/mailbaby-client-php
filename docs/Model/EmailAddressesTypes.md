@@ -1,4 +1,4 @@
-# # EmailAddressesTypes
+# EmailAddressesTypes
 
 ## Properties
 
