@@ -9,6 +9,7 @@ docs/Api/HistoryApi.md
 docs/Api/SendingApi.md
 docs/Api/ServicesApi.md
 docs/Api/StatusApi.md
+docs/Model/DateOrTimestamp.md
 docs/Model/DenyRuleNew.md
 docs/Model/DenyRuleRecord.md
 docs/Model/EmailAddressName.md
@@ -32,7 +33,6 @@ docs/Model/SendMail.md
 docs/Model/SendMailAdv.md
 docs/Model/SendMailRaw.md
 docs/Model/SendMailTo.md
-docs/Model/ViewMailLogStartDateParameter.md
 git_push.sh
 phpunit.xml.dist
 src/Api/BlockingApi.php
@@ -44,6 +44,7 @@ src/ApiException.php
 src/Configuration.php
 src/FormDataProcessor.php
 src/HeaderSelector.php
+src/Model/DateOrTimestamp.php
 src/Model/DenyRuleNew.php
 src/Model/DenyRuleRecord.php
 src/Model/EmailAddressName.php
@@ -68,13 +69,13 @@ src/Model/SendMail.php
 src/Model/SendMailAdv.php
 src/Model/SendMailRaw.php
 src/Model/SendMailTo.php
-src/Model/ViewMailLogStartDateParameter.php
 src/ObjectSerializer.php
 test/Api/BlockingApiTest.php
 test/Api/HistoryApiTest.php
 test/Api/SendingApiTest.php
 test/Api/ServicesApiTest.php
 test/Api/StatusApiTest.php
+test/Model/DateOrTimestampTest.php
 test/Model/DenyRuleNewTest.php
 test/Model/DenyRuleRecordTest.php
 test/Model/EmailAddressNameTest.php
@@ -98,4 +99,3 @@ test/Model/SendMailAdvTest.php
 test/Model/SendMailRawTest.php
 test/Model/SendMailTest.php
 test/Model/SendMailToTest.php
-test/Model/ViewMailLogStartDateParameterTest.php

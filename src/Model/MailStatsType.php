@@ -269,10 +269,10 @@ class MailStatsType implements ModelInterface, ArrayAccess, \JsonSerializable
     public const TIME_ALL = 'all';
     public const TIME_BILLING = 'billing';
     public const TIME_MONTH = 'month';
-    public const TIME__7D = '7d';
-    public const TIME__24H = '24h';
+    public const TIME_SEVEN_DAYS = '7d';
+    public const TIME_TWENTY_FOUR_HOURS = '24h';
     public const TIME_DAY = 'day';
-    public const TIME__1H = '1h';
+    public const TIME_ONE_HOUR = '1h';
 
     /**
      * Gets allowable values of the enum
@@ -285,10 +285,10 @@ class MailStatsType implements ModelInterface, ArrayAccess, \JsonSerializable
             self::TIME_ALL,
             self::TIME_BILLING,
             self::TIME_MONTH,
-            self::TIME__7D,
-            self::TIME__24H,
+            self::TIME_SEVEN_DAYS,
+            self::TIME_TWENTY_FOUR_HOURS,
             self::TIME_DAY,
-            self::TIME__1H,
+            self::TIME_ONE_HOUR,
         ];
     }
 

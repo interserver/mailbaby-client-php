@@ -1,4 +1,4 @@
-# ViewMailLogStartDateParameter
+# DateOrTimestamp
 
 ## Properties
 

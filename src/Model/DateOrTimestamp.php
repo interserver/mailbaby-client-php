@@ -1,6 +1,6 @@
 <?php
 /**
- * ViewMailLogStartDateParameter
+ * DateOrTimestamp
  *
  * PHP version 8.1
  *
@@ -33,15 +33,16 @@ use \ArrayAccess;
 use \Interserver\Mailbaby\ObjectSerializer;
 
 /**
- * ViewMailLogStartDateParameter Class Doc Comment
+ * DateOrTimestamp Class Doc Comment
  *
  * @category Class
+ * @description A date/time value accepted as either a Unix timestamp (integer seconds since epoch) or a date string parseable by &#x60;strtotime()&#x60; (e.g. &#x60;2024-01-15&#x60;, &#x60;last monday&#x60;).
  * @package  Interserver\Mailbaby
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class ViewMailLogStartDateParameter implements ModelInterface, ArrayAccess, \JsonSerializable
+class DateOrTimestamp implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -50,7 +51,7 @@ class ViewMailLogStartDateParameter implements ModelInterface, ArrayAccess, \Jso
      *
      * @var string
      */
-    protected static $openAPIModelName = 'viewMailLog_startDate_parameter';
+    protected static $openAPIModelName = 'DateOrTimestamp';
 
     /**
      * Array of property to type mappings. Used for (de)serialization

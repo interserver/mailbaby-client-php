@@ -1,6 +1,6 @@
 <?php
 /**
- * ViewMailLogStartDateParameterTest
+ * DateOrTimestampTest
  *
  * PHP version 8.1
  *
@@ -32,15 +32,15 @@ namespace Interserver\Mailbaby\Test\Model;
 use PHPUnit\Framework\TestCase;
 
 /**
- * ViewMailLogStartDateParameterTest Class Doc Comment
+ * DateOrTimestampTest Class Doc Comment
  *
  * @category    Class
- * @description ViewMailLogStartDateParameter
+ * @description A date/time value accepted as either a Unix timestamp (integer seconds since epoch) or a date string parseable by &#x60;strtotime()&#x60; (e.g. &#x60;2024-01-15&#x60;, &#x60;last monday&#x60;).
  * @package     Interserver\Mailbaby
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
  */
-class ViewMailLogStartDateParameterTest extends TestCase
+class DateOrTimestampTest extends TestCase
 {
 
     /**
@@ -72,9 +72,9 @@ class ViewMailLogStartDateParameterTest extends TestCase
     }
 
     /**
-     * Test "ViewMailLogStartDateParameter"
+     * Test "DateOrTimestamp"
      */
-    public function testViewMailLogStartDateParameter()
+    public function testDateOrTimestamp()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');
