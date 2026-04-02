@@ -1,6 +1,6 @@
 <?php
 /**
- * SendMailAdv
+ * ViewMailLogStartDateParameter
  *
  * PHP version 8.1
  *
@@ -33,16 +33,15 @@ use \ArrayAccess;
 use \Interserver\Mailbaby\ObjectSerializer;
 
 /**
- * SendMailAdv Class Doc Comment
+ * ViewMailLogStartDateParameter Class Doc Comment
  *
  * @category Class
- * @description Request body for &#x60;POST /mail/advsend&#x60;.  Provides full control over all email headers and supports multiple recipients, CC, BCC, Reply-To, and file attachments.  Address fields (&#x60;from&#x60;, &#x60;to&#x60;, &#x60;replyto&#x60;, &#x60;cc&#x60;, &#x60;bcc&#x60;) each accept either a plain RFC 822 string (e.g. &#x60;\&quot;Joe &lt;joe@example.com&gt;\&quot;&#x60; or a comma-separated list) or a structured array of &#x60;{\&quot;email\&quot;: \&quot;...\&quot;, \&quot;name\&quot;: \&quot;...\&quot;}&#x60; objects.  HTML detection is automatic based on whether &#x60;body&#x60; contains HTML tags.
  * @package  Interserver\Mailbaby
  * @author   OpenAPI Generator team
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class SendMailAdv implements ModelInterface, ArrayAccess, \JsonSerializable
+class ViewMailLogStartDateParameter implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -51,7 +50,7 @@ class SendMailAdv implements ModelInterface, ArrayAccess, \JsonSerializable
      *
      * @var string
      */
-    protected static $openAPIModelName = 'SendMailAdv';
+    protected static $openAPIModelName = 'viewMailLog_startDate_parameter';
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -59,15 +58,7 @@ class SendMailAdv implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $openAPITypes = [
-        'subject' => 'string',
-        'body' => 'string',
-        'from' => '\Interserver\Mailbaby\Model\EmailAddressTypes',
-        'to' => '\Interserver\Mailbaby\Model\EmailAddressesTypes',
-        'replyto' => '\Interserver\Mailbaby\Model\EmailAddressesTypes',
-        'cc' => '\Interserver\Mailbaby\Model\EmailAddressesTypes',
-        'bcc' => '\Interserver\Mailbaby\Model\EmailAddressesTypes',
-        'attachments' => '\Interserver\Mailbaby\Model\MailAttachment[]',
-        'id' => 'int'
+        
     ];
 
     /**
@@ -78,15 +69,7 @@ class SendMailAdv implements ModelInterface, ArrayAccess, \JsonSerializable
      * @psalm-var array<string, string|null>
      */
     protected static $openAPIFormats = [
-        'subject' => null,
-        'body' => null,
-        'from' => null,
-        'to' => null,
-        'replyto' => null,
-        'cc' => null,
-        'bcc' => null,
-        'attachments' => null,
-        'id' => 'int64'
+        
     ];
 
     /**
@@ -95,15 +78,7 @@ class SendMailAdv implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var boolean[]
      */
     protected static array $openAPINullables = [
-        'subject' => false,
-        'body' => false,
-        'from' => false,
-        'to' => false,
-        'replyto' => false,
-        'cc' => false,
-        'bcc' => false,
-        'attachments' => false,
-        'id' => false
+        
     ];
 
     /**
@@ -192,15 +167,7 @@ class SendMailAdv implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'subject' => 'subject',
-        'body' => 'body',
-        'from' => 'from',
-        'to' => 'to',
-        'replyto' => 'replyto',
-        'cc' => 'cc',
-        'bcc' => 'bcc',
-        'attachments' => 'attachments',
-        'id' => 'id'
+        
     ];
 
     /**
@@ -209,15 +176,7 @@ class SendMailAdv implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'subject' => 'setSubject',
-        'body' => 'setBody',
-        'from' => 'setFrom',
-        'to' => 'setTo',
-        'replyto' => 'setReplyto',
-        'cc' => 'setCc',
-        'bcc' => 'setBcc',
-        'attachments' => 'setAttachments',
-        'id' => 'setId'
+        
     ];
 
     /**
@@ -226,15 +185,7 @@ class SendMailAdv implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'subject' => 'getSubject',
-        'body' => 'getBody',
-        'from' => 'getFrom',
-        'to' => 'getTo',
-        'replyto' => 'getReplyto',
-        'cc' => 'getCc',
-        'bcc' => 'getBcc',
-        'attachments' => 'getAttachments',
-        'id' => 'getId'
+        
     ];
 
     /**
@@ -294,15 +245,6 @@ class SendMailAdv implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('subject', $data ?? [], null);
-        $this->setIfExists('body', $data ?? [], null);
-        $this->setIfExists('from', $data ?? [], null);
-        $this->setIfExists('to', $data ?? [], null);
-        $this->setIfExists('replyto', $data ?? [], null);
-        $this->setIfExists('cc', $data ?? [], null);
-        $this->setIfExists('bcc', $data ?? [], null);
-        $this->setIfExists('attachments', $data ?? [], null);
-        $this->setIfExists('id', $data ?? [], null);
     }
 
     /**
@@ -332,18 +274,6 @@ class SendMailAdv implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['subject'] === null) {
-            $invalidProperties[] = "'subject' can't be null";
-        }
-        if ($this->container['body'] === null) {
-            $invalidProperties[] = "'body' can't be null";
-        }
-        if ($this->container['from'] === null) {
-            $invalidProperties[] = "'from' can't be null";
-        }
-        if ($this->container['to'] === null) {
-            $invalidProperties[] = "'to' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -358,249 +288,6 @@ class SendMailAdv implements ModelInterface, ArrayAccess, \JsonSerializable
         return count($this->listInvalidProperties()) === 0;
     }
 
-
-    /**
-     * Gets subject
-     *
-     * @return string
-     */
-    public function getSubject()
-    {
-        return $this->container['subject'];
-    }
-
-    /**
-     * Sets subject
-     *
-     * @param string $subject The subject line of the email.
-     *
-     * @return self
-     */
-    public function setSubject($subject)
-    {
-        if (is_null($subject)) {
-            throw new \InvalidArgumentException('non-nullable subject cannot be null');
-        }
-        $this->container['subject'] = $subject;
-
-        return $this;
-    }
-
-    /**
-     * Gets body
-     *
-     * @return string
-     */
-    public function getBody()
-    {
-        return $this->container['body'];
-    }
-
-    /**
-     * Sets body
-     *
-     * @param string $body The email body.  If the string contains any HTML tags the message is automatically sent as `text/html`; otherwise it is sent as `text/plain`.
-     *
-     * @return self
-     */
-    public function setBody($body)
-    {
-        if (is_null($body)) {
-            throw new \InvalidArgumentException('non-nullable body cannot be null');
-        }
-        $this->container['body'] = $body;
-
-        return $this;
-    }
-
-    /**
-     * Gets from
-     *
-     * @return \Interserver\Mailbaby\Model\EmailAddressTypes
-     */
-    public function getFrom()
-    {
-        return $this->container['from'];
-    }
-
-    /**
-     * Sets from
-     *
-     * @param \Interserver\Mailbaby\Model\EmailAddressTypes $from The sender address.  Accepts a plain email string, an RFC 822 named string (`\"Name <email>\"`), or a `{\"email\": \"...\", \"name\": \"...\"}` object.
-     *
-     * @return self
-     */
-    public function setFrom($from)
-    {
-        if (is_null($from)) {
-            throw new \InvalidArgumentException('non-nullable from cannot be null');
-        }
-        $this->container['from'] = $from;
-
-        return $this;
-    }
-
-    /**
-     * Gets to
-     *
-     * @return \Interserver\Mailbaby\Model\EmailAddressesTypes
-     */
-    public function getTo()
-    {
-        return $this->container['to'];
-    }
-
-    /**
-     * Sets to
-     *
-     * @param \Interserver\Mailbaby\Model\EmailAddressesTypes $to One or more destination addresses.  Accepts a comma-separated RFC 822 string or an array of contact objects.
-     *
-     * @return self
-     */
-    public function setTo($to)
-    {
-        if (is_null($to)) {
-            throw new \InvalidArgumentException('non-nullable to cannot be null');
-        }
-        $this->container['to'] = $to;
-
-        return $this;
-    }
-
-    /**
-     * Gets replyto
-     *
-     * @return \Interserver\Mailbaby\Model\EmailAddressesTypes|null
-     */
-    public function getReplyto()
-    {
-        return $this->container['replyto'];
-    }
-
-    /**
-     * Sets replyto
-     *
-     * @param \Interserver\Mailbaby\Model\EmailAddressesTypes|null $replyto Optional.  One or more addresses to set as the `Reply-To` header. When recipients reply to the message their email client will address the reply to these addresses instead of `from`.
-     *
-     * @return self
-     */
-    public function setReplyto($replyto)
-    {
-        if (is_null($replyto)) {
-            throw new \InvalidArgumentException('non-nullable replyto cannot be null');
-        }
-        $this->container['replyto'] = $replyto;
-
-        return $this;
-    }
-
-    /**
-     * Gets cc
-     *
-     * @return \Interserver\Mailbaby\Model\EmailAddressesTypes|null
-     */
-    public function getCc()
-    {
-        return $this->container['cc'];
-    }
-
-    /**
-     * Sets cc
-     *
-     * @param \Interserver\Mailbaby\Model\EmailAddressesTypes|null $cc Optional.  Carbon-copy recipients.  These addresses are listed in the `Cc` header and are visible to all recipients.
-     *
-     * @return self
-     */
-    public function setCc($cc)
-    {
-        if (is_null($cc)) {
-            throw new \InvalidArgumentException('non-nullable cc cannot be null');
-        }
-        $this->container['cc'] = $cc;
-
-        return $this;
-    }
-
-    /**
-     * Gets bcc
-     *
-     * @return \Interserver\Mailbaby\Model\EmailAddressesTypes|null
-     */
-    public function getBcc()
-    {
-        return $this->container['bcc'];
-    }
-
-    /**
-     * Sets bcc
-     *
-     * @param \Interserver\Mailbaby\Model\EmailAddressesTypes|null $bcc Optional.  Blind-carbon-copy recipients.  These addresses receive the message but are not listed in any visible header.
-     *
-     * @return self
-     */
-    public function setBcc($bcc)
-    {
-        if (is_null($bcc)) {
-            throw new \InvalidArgumentException('non-nullable bcc cannot be null');
-        }
-        $this->container['bcc'] = $bcc;
-
-        return $this;
-    }
-
-    /**
-     * Gets attachments
-     *
-     * @return \Interserver\Mailbaby\Model\MailAttachment[]|null
-     */
-    public function getAttachments()
-    {
-        return $this->container['attachments'];
-    }
-
-    /**
-     * Sets attachments
-     *
-     * @param \Interserver\Mailbaby\Model\MailAttachment[]|null $attachments Optional list of file attachments.  Each file must be base64-encoded. Include `filename` so recipients see a meaningful attachment name.
-     *
-     * @return self
-     */
-    public function setAttachments($attachments)
-    {
-        if (is_null($attachments)) {
-            throw new \InvalidArgumentException('non-nullable attachments cannot be null');
-        }
-        $this->container['attachments'] = $attachments;
-
-        return $this;
-    }
-
-    /**
-     * Gets id
-     *
-     * @return int|null
-     */
-    public function getId()
-    {
-        return $this->container['id'];
-    }
-
-    /**
-     * Sets id
-     *
-     * @param int|null $id Optional numeric ID of the mail order to send through.  If omitted the first active order on your account is used automatically.  Valid IDs are returned by `GET /mail`.
-     *
-     * @return self
-     */
-    public function setId($id)
-    {
-        if (is_null($id)) {
-            throw new \InvalidArgumentException('non-nullable id cannot be null');
-        }
-        $this->container['id'] = $id;
-
-        return $this;
-    }
     /**
      * Returns true if offset exists. False otherwise.
      *

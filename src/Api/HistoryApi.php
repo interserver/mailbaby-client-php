@@ -12,7 +12,7 @@
 /**
  * MailBaby Email Delivery and Management Service API
  *
- * **Send emails fast and with confidence through our easy to use [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) API interface.**  # Overview  This is the API interface to the [Mail Baby](https://mail.baby/) Mail services provided by [InterServer](https://www.interserver.net). To use this service you must have an account with us at [my.interserver.net](https://my.interserver.net).  # Mail Orders  Every sending account in MailBaby is backed by a **Mail Order** — a provisioned sending credential with a numeric `id` and a corresponding SMTP username (`mb<id>`).  Most calls accept an optional `id` parameter; when omitted the API automatically selects the first active order on your account. Use `GET /mail` to list all orders, and `GET /mail/{id}` to inspect a single order including its current SMTP password.  # Sending Email  Three sending methods are available depending on your use-case: | Endpoint | Best for | |----------|----------| | `POST /mail/send` | Simple single-recipient messages | | `POST /mail/advsend` | Multiple recipients, CC/BCC, attachments, named contacts | | `POST /mail/rawsend` | Pre-built RFC 822 messages (e.g. DKIM-signed payloads) |  After a successful send each endpoint returns a `GenericResponse` whose `text` field contains the **transaction ID** assigned by the relay.  This ID can later be matched against entries in `GET /mail/log` via the `mailid` query parameter.  # Filtering & Logs  `GET /mail/log` provides paginated access to every message accepted by the relay for your account.  Combine any of the query parameters to narrow results — e.g. `from`, `to`, `subject`, `messageId`, `origin`, `mx`, `startDate`/`endDate`, and `delivered`.  # Blocking  Two independent mechanisms exist for suppressing unwanted email: - **Block lists** (`GET /mail/blocks`, `POST /mail/blocks/delete`) — addresses flagged by the   system spam filters (LOCAL_BL_RCPT / MBTRAP rules in rspamd, and suspicious subjects). - **Deny rules** (`GET /mail/rules`, `POST /mail/rules`, `DELETE /mail/rules/{ruleId}`) —   custom rules you configure to reject specific senders, domains, destination addresses, or   subject-line prefixes before a message is even attempted.   # Authentication  In order to use most of the API calls you must pass credentials from the [my.interserver.net](https://my.interserver.net/) site. We support several different authentication methods but the preferred method is to use the **API Key** which you can get from the [Account Security](https://my.interserver.net/account_security) page. Pass your key in the `X-API-KEY` HTTP request header for every protected call.
+ * **Send emails fast and with confidence through our easy to use [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) API interface.**  # Overview  This is the API interface to the [Mail Baby](https://mail.baby/) Mail services provided by [InterServer](https://www.interserver.net). To use this service you must have an account with us at [my.interserver.net](https://my.interserver.net).  # Mail Orders  Every sending account in MailBaby is backed by a **Mail Order** — a provisioned sending credential with a numeric `id` and a corresponding SMTP username (`mb<id>`).  Most calls accept an optional `id` parameter; when omitted the API automatically selects the first active order on your account. Use `GET /mail` to list all orders, and `GET /mail/{id}` to inspect a single order including its current SMTP password.  # Sending Email  Three sending methods are available depending on your use-case: | Endpoint | Best for | |----------|----------| | `POST /mail/send` | Simple single-recipient messages | | `POST /mail/advsend` | Multiple recipients, CC/BCC, attachments, named contacts | | `POST /mail/rawsend` | Pre-built RFC 822 messages (e.g. DKIM-signed payloads) |  After a successful send each endpoint returns a `GenericResponse` whose `text` field contains the **transaction ID** assigned by the relay.  This ID can later be matched against entries in `GET /mail/log` via the `mailid` query parameter.  # Filtering & Logs  `GET /mail/log` provides paginated access to every message accepted by the relay for your account. Combine any of the query parameters to narrow results — e.g. `from`, `to`, `subject`, `messageId`, `origin`, `mx`, `startDate`/`endDate`, and `delivered`.  # Blocking  Two independent mechanisms exist for suppressing unwanted email: - **Block lists** (`GET /mail/blocks`, `POST /mail/blocks/delete`) — addresses flagged by the   system spam filters (LOCAL_BL_RCPT / MBTRAP rules in rspamd, and suspicious subjects). - **Deny rules** (`GET /mail/rules`, `POST /mail/rules`, `DELETE /mail/rules/{ruleId}`) —   custom rules you configure to reject specific senders, domains, destination addresses, or   subject-line prefixes before a message is even attempted.   # Authentication  In order to use most of the API calls you must pass credentials from the [my.interserver.net](https://my.interserver.net/) site. We support several different authentication methods but the preferred method is to use the **API Key** which you can get from the [Account Security](https://my.interserver.net/account_security) page. Pass your key in the `X-API-KEY` HTTP request header for every protected call.
  *
  * The version of the OpenAPI document: 1.4.0
  * Contact: support@interserver.net
@@ -134,7 +134,7 @@ class HistoryApi
      *
      * Account usage statistics
      *
-     * @param  string|null $time The time window to scope &#x60;received&#x60;, &#x60;sent&#x60;, and &#x60;volume&#x60; statistics. Does not affect &#x60;usage&#x60; or &#x60;cost&#x60;, which are always calculated over the current billing cycle.  Defaults to &#x60;1h&#x60;. (optional, default to '1h')
+     * @param  string|null $time The time window to scope &#x60;received&#x60;, &#x60;sent&#x60;, and &#x60;volume&#x60; statistics. Does not affect &#x60;usage&#x60; or &#x60;cost&#x60;, which are always calculated over the current billing cycle. Defaults to &#x60;1h&#x60;. (optional, default to '1h')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getStats'] to see the possible values for this operation
      *
      * @throws \Interserver\Mailbaby\ApiException on non-2xx response or if the response body is not in the expected format
@@ -152,7 +152,7 @@ class HistoryApi
      *
      * Account usage statistics
      *
-     * @param  string|null $time The time window to scope &#x60;received&#x60;, &#x60;sent&#x60;, and &#x60;volume&#x60; statistics. Does not affect &#x60;usage&#x60; or &#x60;cost&#x60;, which are always calculated over the current billing cycle.  Defaults to &#x60;1h&#x60;. (optional, default to '1h')
+     * @param  string|null $time The time window to scope &#x60;received&#x60;, &#x60;sent&#x60;, and &#x60;volume&#x60; statistics. Does not affect &#x60;usage&#x60; or &#x60;cost&#x60;, which are always calculated over the current billing cycle. Defaults to &#x60;1h&#x60;. (optional, default to '1h')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getStats'] to see the possible values for this operation
      *
      * @throws \Interserver\Mailbaby\ApiException on non-2xx response or if the response body is not in the expected format
@@ -251,7 +251,7 @@ class HistoryApi
      *
      * Account usage statistics
      *
-     * @param  string|null $time The time window to scope &#x60;received&#x60;, &#x60;sent&#x60;, and &#x60;volume&#x60; statistics. Does not affect &#x60;usage&#x60; or &#x60;cost&#x60;, which are always calculated over the current billing cycle.  Defaults to &#x60;1h&#x60;. (optional, default to '1h')
+     * @param  string|null $time The time window to scope &#x60;received&#x60;, &#x60;sent&#x60;, and &#x60;volume&#x60; statistics. Does not affect &#x60;usage&#x60; or &#x60;cost&#x60;, which are always calculated over the current billing cycle. Defaults to &#x60;1h&#x60;. (optional, default to '1h')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getStats'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -272,7 +272,7 @@ class HistoryApi
      *
      * Account usage statistics
      *
-     * @param  string|null $time The time window to scope &#x60;received&#x60;, &#x60;sent&#x60;, and &#x60;volume&#x60; statistics. Does not affect &#x60;usage&#x60; or &#x60;cost&#x60;, which are always calculated over the current billing cycle.  Defaults to &#x60;1h&#x60;. (optional, default to '1h')
+     * @param  string|null $time The time window to scope &#x60;received&#x60;, &#x60;sent&#x60;, and &#x60;volume&#x60; statistics. Does not affect &#x60;usage&#x60; or &#x60;cost&#x60;, which are always calculated over the current billing cycle. Defaults to &#x60;1h&#x60;. (optional, default to '1h')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getStats'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -322,7 +322,7 @@ class HistoryApi
     /**
      * Create request for operation 'getStats'
      *
-     * @param  string|null $time The time window to scope &#x60;received&#x60;, &#x60;sent&#x60;, and &#x60;volume&#x60; statistics. Does not affect &#x60;usage&#x60; or &#x60;cost&#x60;, which are always calculated over the current billing cycle.  Defaults to &#x60;1h&#x60;. (optional, default to '1h')
+     * @param  string|null $time The time window to scope &#x60;received&#x60;, &#x60;sent&#x60;, and &#x60;volume&#x60; statistics. Does not affect &#x60;usage&#x60; or &#x60;cost&#x60;, which are always calculated over the current billing cycle. Defaults to &#x60;1h&#x60;. (optional, default to '1h')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getStats'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
@@ -423,23 +423,26 @@ class HistoryApi
      * @param  string|null $to Filter by SMTP envelope &#x60;RCPT TO&#x60; address (exact match).  This is the delivery address used by the relay and may differ from the &#x60;To:&#x60; header when BCC recipients are involved. (optional)
      * @param  string|null $subject Filter by email &#x60;Subject&#x60; header (exact match).  To search for a substring, include it in the full subject text. (optional)
      * @param  string|null $mailid Filter by the relay-assigned mail ID string (exact match).  This corresponds to the &#x60;id&#x60; field in &#x60;MailLogEntry&#x60; and to the &#x60;text&#x60; value returned by the sending endpoints on success.  Format is an 18–19 character hexadecimal string such as &#x60;185997065c60008840&#x60;. (optional)
-     * @param  string|null $messageId Filter by the &#x60;Message-ID&#x60; email header using a substring (case-insensitive) match.  The &#x60;Message-ID&#x60; is assigned by the sending mail client and is visible in the &#x60;messageId&#x60; field of &#x60;MailLogEntry&#x60;.  Useful when you know the message ID generated by your application but not the relay &#x60;mailid&#x60;. (optional)
+     * @param  string|null $messageId Filter by the &#x60;Message-ID&#x60; email header using a substring (case-insensitive) match. The &#x60;Message-ID&#x60; is assigned by the sending mail client and is visible in the &#x60;messageId&#x60; field of &#x60;MailLogEntry&#x60;.  Useful when you know the message ID generated by your application but not the relay &#x60;mailid&#x60;. (optional)
      * @param  string|null $replyto Filter by the &#x60;Reply-To&#x60; message header address (exact match).  Only returns messages where this header was explicitly set. (optional)
      * @param  string|null $headerfrom Filter by the &#x60;From&#x60; message header address (exact match).  This is the human-visible sender address and may differ from the SMTP envelope &#x60;from&#x60; parameter when sending on behalf of another address. (optional)
      * @param  int|null $delivered Filter by delivery status.  &#x60;1&#x60; returns only messages that were successfully delivered to the destination MX.  &#x60;0&#x60; returns messages that are still queued, deferred, or failed.  Omit to return all messages regardless of delivery status. (optional)
      * @param  int|null $skip Number of records to skip for pagination.  Use in combination with &#x60;limit&#x60; to page through large result sets.  Defaults to &#x60;0&#x60; (no skip). (optional, default to 0)
      * @param  int|null $limit Maximum number of records to return per page.  Defaults to &#x60;100&#x60;. Maximum allowed value is &#x60;10000&#x60;.  The response also includes a &#x60;total&#x60; field with the full matched count so you can calculate the number of pages. (optional, default to 100)
-     * @param  int|null $startDate Earliest date to include, as a Unix timestamp (seconds since epoch). Messages with a &#x60;time&#x60; value **greater than or equal to** this value will be included. (optional)
-     * @param  int|null $endDate Latest date to include, as a Unix timestamp (seconds since epoch). Messages with a &#x60;time&#x60; value **less than or equal to** this value will be included. (optional)
+     * @param  \Interserver\Mailbaby\Model\ViewMailLogStartDateParameter|null $startDate Earliest date to include.  Accepts either a Unix timestamp (integer seconds since epoch) or a date string parseable by &#x60;strtotime()&#x60; such as &#x60;2024-01-15&#x60; or &#x60;last monday&#x60;.  Messages with a &#x60;time&#x60; value **greater than or equal to** this value will be included. (optional)
+     * @param  \Interserver\Mailbaby\Model\ViewMailLogStartDateParameter|null $endDate Latest date to include.  Accepts either a Unix timestamp (integer seconds since epoch) or a date string parseable by &#x60;strtotime()&#x60; such as &#x60;2024-01-31&#x60; or &#x60;yesterday&#x60;. Messages with a &#x60;time&#x60; value **less than or equal to** this value will be included. (optional)
+     * @param  string|null $sort Field to sort results by.  Currently only &#x60;time&#x60; is supported (sorts by internal row ID which corresponds to chronological order). (optional, default to 'time')
+     * @param  string|null $dir Sort direction.  &#x60;desc&#x60; returns newest first (default), &#x60;asc&#x60; returns oldest first. (optional, default to 'desc')
+     * @param  string|null $groupby Controls how results are grouped.  &#x60;recipient&#x60; (default) returns one row per delivery attempt — a message sent to 4 recipients produces 4 rows, each with its own &#x60;recipient&#x60;, &#x60;delivered&#x60;, &#x60;response&#x60;, and delivery metadata.  &#x60;message&#x60; collapses to one row per unique message ID; delivery-level fields will reflect one arbitrary recipient per message.  The &#x60;total&#x60; count in the response matches the grouping mode. (optional, default to 'recipient')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['viewMailLog'] to see the possible values for this operation
      *
      * @throws \Interserver\Mailbaby\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \Interserver\Mailbaby\Model\MailLog|\Interserver\Mailbaby\Model\ErrorMessage|\Interserver\Mailbaby\Model\ErrorMessage
      */
-    public function viewMailLog($id = null, $origin = null, $mx = null, $from = null, $to = null, $subject = null, $mailid = null, $messageId = null, $replyto = null, $headerfrom = null, $delivered = null, $skip = 0, $limit = 100, $startDate = null, $endDate = null, string $contentType = self::contentTypes['viewMailLog'][0])
+    public function viewMailLog($id = null, $origin = null, $mx = null, $from = null, $to = null, $subject = null, $mailid = null, $messageId = null, $replyto = null, $headerfrom = null, $delivered = null, $skip = 0, $limit = 100, $startDate = null, $endDate = null, $sort = 'time', $dir = 'desc', $groupby = 'recipient', string $contentType = self::contentTypes['viewMailLog'][0])
     {
-        list($response) = $this->viewMailLogWithHttpInfo($id, $origin, $mx, $from, $to, $subject, $mailid, $messageId, $replyto, $headerfrom, $delivered, $skip, $limit, $startDate, $endDate, $contentType);
+        list($response) = $this->viewMailLogWithHttpInfo($id, $origin, $mx, $from, $to, $subject, $mailid, $messageId, $replyto, $headerfrom, $delivered, $skip, $limit, $startDate, $endDate, $sort, $dir, $groupby, $contentType);
         return $response;
     }
 
@@ -455,23 +458,26 @@ class HistoryApi
      * @param  string|null $to Filter by SMTP envelope &#x60;RCPT TO&#x60; address (exact match).  This is the delivery address used by the relay and may differ from the &#x60;To:&#x60; header when BCC recipients are involved. (optional)
      * @param  string|null $subject Filter by email &#x60;Subject&#x60; header (exact match).  To search for a substring, include it in the full subject text. (optional)
      * @param  string|null $mailid Filter by the relay-assigned mail ID string (exact match).  This corresponds to the &#x60;id&#x60; field in &#x60;MailLogEntry&#x60; and to the &#x60;text&#x60; value returned by the sending endpoints on success.  Format is an 18–19 character hexadecimal string such as &#x60;185997065c60008840&#x60;. (optional)
-     * @param  string|null $messageId Filter by the &#x60;Message-ID&#x60; email header using a substring (case-insensitive) match.  The &#x60;Message-ID&#x60; is assigned by the sending mail client and is visible in the &#x60;messageId&#x60; field of &#x60;MailLogEntry&#x60;.  Useful when you know the message ID generated by your application but not the relay &#x60;mailid&#x60;. (optional)
+     * @param  string|null $messageId Filter by the &#x60;Message-ID&#x60; email header using a substring (case-insensitive) match. The &#x60;Message-ID&#x60; is assigned by the sending mail client and is visible in the &#x60;messageId&#x60; field of &#x60;MailLogEntry&#x60;.  Useful when you know the message ID generated by your application but not the relay &#x60;mailid&#x60;. (optional)
      * @param  string|null $replyto Filter by the &#x60;Reply-To&#x60; message header address (exact match).  Only returns messages where this header was explicitly set. (optional)
      * @param  string|null $headerfrom Filter by the &#x60;From&#x60; message header address (exact match).  This is the human-visible sender address and may differ from the SMTP envelope &#x60;from&#x60; parameter when sending on behalf of another address. (optional)
      * @param  int|null $delivered Filter by delivery status.  &#x60;1&#x60; returns only messages that were successfully delivered to the destination MX.  &#x60;0&#x60; returns messages that are still queued, deferred, or failed.  Omit to return all messages regardless of delivery status. (optional)
      * @param  int|null $skip Number of records to skip for pagination.  Use in combination with &#x60;limit&#x60; to page through large result sets.  Defaults to &#x60;0&#x60; (no skip). (optional, default to 0)
      * @param  int|null $limit Maximum number of records to return per page.  Defaults to &#x60;100&#x60;. Maximum allowed value is &#x60;10000&#x60;.  The response also includes a &#x60;total&#x60; field with the full matched count so you can calculate the number of pages. (optional, default to 100)
-     * @param  int|null $startDate Earliest date to include, as a Unix timestamp (seconds since epoch). Messages with a &#x60;time&#x60; value **greater than or equal to** this value will be included. (optional)
-     * @param  int|null $endDate Latest date to include, as a Unix timestamp (seconds since epoch). Messages with a &#x60;time&#x60; value **less than or equal to** this value will be included. (optional)
+     * @param  \Interserver\Mailbaby\Model\ViewMailLogStartDateParameter|null $startDate Earliest date to include.  Accepts either a Unix timestamp (integer seconds since epoch) or a date string parseable by &#x60;strtotime()&#x60; such as &#x60;2024-01-15&#x60; or &#x60;last monday&#x60;.  Messages with a &#x60;time&#x60; value **greater than or equal to** this value will be included. (optional)
+     * @param  \Interserver\Mailbaby\Model\ViewMailLogStartDateParameter|null $endDate Latest date to include.  Accepts either a Unix timestamp (integer seconds since epoch) or a date string parseable by &#x60;strtotime()&#x60; such as &#x60;2024-01-31&#x60; or &#x60;yesterday&#x60;. Messages with a &#x60;time&#x60; value **less than or equal to** this value will be included. (optional)
+     * @param  string|null $sort Field to sort results by.  Currently only &#x60;time&#x60; is supported (sorts by internal row ID which corresponds to chronological order). (optional, default to 'time')
+     * @param  string|null $dir Sort direction.  &#x60;desc&#x60; returns newest first (default), &#x60;asc&#x60; returns oldest first. (optional, default to 'desc')
+     * @param  string|null $groupby Controls how results are grouped.  &#x60;recipient&#x60; (default) returns one row per delivery attempt — a message sent to 4 recipients produces 4 rows, each with its own &#x60;recipient&#x60;, &#x60;delivered&#x60;, &#x60;response&#x60;, and delivery metadata.  &#x60;message&#x60; collapses to one row per unique message ID; delivery-level fields will reflect one arbitrary recipient per message.  The &#x60;total&#x60; count in the response matches the grouping mode. (optional, default to 'recipient')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['viewMailLog'] to see the possible values for this operation
      *
      * @throws \Interserver\Mailbaby\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \Interserver\Mailbaby\Model\MailLog|\Interserver\Mailbaby\Model\ErrorMessage|\Interserver\Mailbaby\Model\ErrorMessage, HTTP status code, HTTP response headers (array of strings)
      */
-    public function viewMailLogWithHttpInfo($id = null, $origin = null, $mx = null, $from = null, $to = null, $subject = null, $mailid = null, $messageId = null, $replyto = null, $headerfrom = null, $delivered = null, $skip = 0, $limit = 100, $startDate = null, $endDate = null, string $contentType = self::contentTypes['viewMailLog'][0])
+    public function viewMailLogWithHttpInfo($id = null, $origin = null, $mx = null, $from = null, $to = null, $subject = null, $mailid = null, $messageId = null, $replyto = null, $headerfrom = null, $delivered = null, $skip = 0, $limit = 100, $startDate = null, $endDate = null, $sort = 'time', $dir = 'desc', $groupby = 'recipient', string $contentType = self::contentTypes['viewMailLog'][0])
     {
-        $request = $this->viewMailLogRequest($id, $origin, $mx, $from, $to, $subject, $mailid, $messageId, $replyto, $headerfrom, $delivered, $skip, $limit, $startDate, $endDate, $contentType);
+        $request = $this->viewMailLogRequest($id, $origin, $mx, $from, $to, $subject, $mailid, $messageId, $replyto, $headerfrom, $delivered, $skip, $limit, $startDate, $endDate, $sort, $dir, $groupby, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -582,22 +588,25 @@ class HistoryApi
      * @param  string|null $to Filter by SMTP envelope &#x60;RCPT TO&#x60; address (exact match).  This is the delivery address used by the relay and may differ from the &#x60;To:&#x60; header when BCC recipients are involved. (optional)
      * @param  string|null $subject Filter by email &#x60;Subject&#x60; header (exact match).  To search for a substring, include it in the full subject text. (optional)
      * @param  string|null $mailid Filter by the relay-assigned mail ID string (exact match).  This corresponds to the &#x60;id&#x60; field in &#x60;MailLogEntry&#x60; and to the &#x60;text&#x60; value returned by the sending endpoints on success.  Format is an 18–19 character hexadecimal string such as &#x60;185997065c60008840&#x60;. (optional)
-     * @param  string|null $messageId Filter by the &#x60;Message-ID&#x60; email header using a substring (case-insensitive) match.  The &#x60;Message-ID&#x60; is assigned by the sending mail client and is visible in the &#x60;messageId&#x60; field of &#x60;MailLogEntry&#x60;.  Useful when you know the message ID generated by your application but not the relay &#x60;mailid&#x60;. (optional)
+     * @param  string|null $messageId Filter by the &#x60;Message-ID&#x60; email header using a substring (case-insensitive) match. The &#x60;Message-ID&#x60; is assigned by the sending mail client and is visible in the &#x60;messageId&#x60; field of &#x60;MailLogEntry&#x60;.  Useful when you know the message ID generated by your application but not the relay &#x60;mailid&#x60;. (optional)
      * @param  string|null $replyto Filter by the &#x60;Reply-To&#x60; message header address (exact match).  Only returns messages where this header was explicitly set. (optional)
      * @param  string|null $headerfrom Filter by the &#x60;From&#x60; message header address (exact match).  This is the human-visible sender address and may differ from the SMTP envelope &#x60;from&#x60; parameter when sending on behalf of another address. (optional)
      * @param  int|null $delivered Filter by delivery status.  &#x60;1&#x60; returns only messages that were successfully delivered to the destination MX.  &#x60;0&#x60; returns messages that are still queued, deferred, or failed.  Omit to return all messages regardless of delivery status. (optional)
      * @param  int|null $skip Number of records to skip for pagination.  Use in combination with &#x60;limit&#x60; to page through large result sets.  Defaults to &#x60;0&#x60; (no skip). (optional, default to 0)
      * @param  int|null $limit Maximum number of records to return per page.  Defaults to &#x60;100&#x60;. Maximum allowed value is &#x60;10000&#x60;.  The response also includes a &#x60;total&#x60; field with the full matched count so you can calculate the number of pages. (optional, default to 100)
-     * @param  int|null $startDate Earliest date to include, as a Unix timestamp (seconds since epoch). Messages with a &#x60;time&#x60; value **greater than or equal to** this value will be included. (optional)
-     * @param  int|null $endDate Latest date to include, as a Unix timestamp (seconds since epoch). Messages with a &#x60;time&#x60; value **less than or equal to** this value will be included. (optional)
+     * @param  \Interserver\Mailbaby\Model\ViewMailLogStartDateParameter|null $startDate Earliest date to include.  Accepts either a Unix timestamp (integer seconds since epoch) or a date string parseable by &#x60;strtotime()&#x60; such as &#x60;2024-01-15&#x60; or &#x60;last monday&#x60;.  Messages with a &#x60;time&#x60; value **greater than or equal to** this value will be included. (optional)
+     * @param  \Interserver\Mailbaby\Model\ViewMailLogStartDateParameter|null $endDate Latest date to include.  Accepts either a Unix timestamp (integer seconds since epoch) or a date string parseable by &#x60;strtotime()&#x60; such as &#x60;2024-01-31&#x60; or &#x60;yesterday&#x60;. Messages with a &#x60;time&#x60; value **less than or equal to** this value will be included. (optional)
+     * @param  string|null $sort Field to sort results by.  Currently only &#x60;time&#x60; is supported (sorts by internal row ID which corresponds to chronological order). (optional, default to 'time')
+     * @param  string|null $dir Sort direction.  &#x60;desc&#x60; returns newest first (default), &#x60;asc&#x60; returns oldest first. (optional, default to 'desc')
+     * @param  string|null $groupby Controls how results are grouped.  &#x60;recipient&#x60; (default) returns one row per delivery attempt — a message sent to 4 recipients produces 4 rows, each with its own &#x60;recipient&#x60;, &#x60;delivered&#x60;, &#x60;response&#x60;, and delivery metadata.  &#x60;message&#x60; collapses to one row per unique message ID; delivery-level fields will reflect one arbitrary recipient per message.  The &#x60;total&#x60; count in the response matches the grouping mode. (optional, default to 'recipient')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['viewMailLog'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function viewMailLogAsync($id = null, $origin = null, $mx = null, $from = null, $to = null, $subject = null, $mailid = null, $messageId = null, $replyto = null, $headerfrom = null, $delivered = null, $skip = 0, $limit = 100, $startDate = null, $endDate = null, string $contentType = self::contentTypes['viewMailLog'][0])
+    public function viewMailLogAsync($id = null, $origin = null, $mx = null, $from = null, $to = null, $subject = null, $mailid = null, $messageId = null, $replyto = null, $headerfrom = null, $delivered = null, $skip = 0, $limit = 100, $startDate = null, $endDate = null, $sort = 'time', $dir = 'desc', $groupby = 'recipient', string $contentType = self::contentTypes['viewMailLog'][0])
     {
-        return $this->viewMailLogAsyncWithHttpInfo($id, $origin, $mx, $from, $to, $subject, $mailid, $messageId, $replyto, $headerfrom, $delivered, $skip, $limit, $startDate, $endDate, $contentType)
+        return $this->viewMailLogAsyncWithHttpInfo($id, $origin, $mx, $from, $to, $subject, $mailid, $messageId, $replyto, $headerfrom, $delivered, $skip, $limit, $startDate, $endDate, $sort, $dir, $groupby, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -617,23 +626,26 @@ class HistoryApi
      * @param  string|null $to Filter by SMTP envelope &#x60;RCPT TO&#x60; address (exact match).  This is the delivery address used by the relay and may differ from the &#x60;To:&#x60; header when BCC recipients are involved. (optional)
      * @param  string|null $subject Filter by email &#x60;Subject&#x60; header (exact match).  To search for a substring, include it in the full subject text. (optional)
      * @param  string|null $mailid Filter by the relay-assigned mail ID string (exact match).  This corresponds to the &#x60;id&#x60; field in &#x60;MailLogEntry&#x60; and to the &#x60;text&#x60; value returned by the sending endpoints on success.  Format is an 18–19 character hexadecimal string such as &#x60;185997065c60008840&#x60;. (optional)
-     * @param  string|null $messageId Filter by the &#x60;Message-ID&#x60; email header using a substring (case-insensitive) match.  The &#x60;Message-ID&#x60; is assigned by the sending mail client and is visible in the &#x60;messageId&#x60; field of &#x60;MailLogEntry&#x60;.  Useful when you know the message ID generated by your application but not the relay &#x60;mailid&#x60;. (optional)
+     * @param  string|null $messageId Filter by the &#x60;Message-ID&#x60; email header using a substring (case-insensitive) match. The &#x60;Message-ID&#x60; is assigned by the sending mail client and is visible in the &#x60;messageId&#x60; field of &#x60;MailLogEntry&#x60;.  Useful when you know the message ID generated by your application but not the relay &#x60;mailid&#x60;. (optional)
      * @param  string|null $replyto Filter by the &#x60;Reply-To&#x60; message header address (exact match).  Only returns messages where this header was explicitly set. (optional)
      * @param  string|null $headerfrom Filter by the &#x60;From&#x60; message header address (exact match).  This is the human-visible sender address and may differ from the SMTP envelope &#x60;from&#x60; parameter when sending on behalf of another address. (optional)
      * @param  int|null $delivered Filter by delivery status.  &#x60;1&#x60; returns only messages that were successfully delivered to the destination MX.  &#x60;0&#x60; returns messages that are still queued, deferred, or failed.  Omit to return all messages regardless of delivery status. (optional)
      * @param  int|null $skip Number of records to skip for pagination.  Use in combination with &#x60;limit&#x60; to page through large result sets.  Defaults to &#x60;0&#x60; (no skip). (optional, default to 0)
      * @param  int|null $limit Maximum number of records to return per page.  Defaults to &#x60;100&#x60;. Maximum allowed value is &#x60;10000&#x60;.  The response also includes a &#x60;total&#x60; field with the full matched count so you can calculate the number of pages. (optional, default to 100)
-     * @param  int|null $startDate Earliest date to include, as a Unix timestamp (seconds since epoch). Messages with a &#x60;time&#x60; value **greater than or equal to** this value will be included. (optional)
-     * @param  int|null $endDate Latest date to include, as a Unix timestamp (seconds since epoch). Messages with a &#x60;time&#x60; value **less than or equal to** this value will be included. (optional)
+     * @param  \Interserver\Mailbaby\Model\ViewMailLogStartDateParameter|null $startDate Earliest date to include.  Accepts either a Unix timestamp (integer seconds since epoch) or a date string parseable by &#x60;strtotime()&#x60; such as &#x60;2024-01-15&#x60; or &#x60;last monday&#x60;.  Messages with a &#x60;time&#x60; value **greater than or equal to** this value will be included. (optional)
+     * @param  \Interserver\Mailbaby\Model\ViewMailLogStartDateParameter|null $endDate Latest date to include.  Accepts either a Unix timestamp (integer seconds since epoch) or a date string parseable by &#x60;strtotime()&#x60; such as &#x60;2024-01-31&#x60; or &#x60;yesterday&#x60;. Messages with a &#x60;time&#x60; value **less than or equal to** this value will be included. (optional)
+     * @param  string|null $sort Field to sort results by.  Currently only &#x60;time&#x60; is supported (sorts by internal row ID which corresponds to chronological order). (optional, default to 'time')
+     * @param  string|null $dir Sort direction.  &#x60;desc&#x60; returns newest first (default), &#x60;asc&#x60; returns oldest first. (optional, default to 'desc')
+     * @param  string|null $groupby Controls how results are grouped.  &#x60;recipient&#x60; (default) returns one row per delivery attempt — a message sent to 4 recipients produces 4 rows, each with its own &#x60;recipient&#x60;, &#x60;delivered&#x60;, &#x60;response&#x60;, and delivery metadata.  &#x60;message&#x60; collapses to one row per unique message ID; delivery-level fields will reflect one arbitrary recipient per message.  The &#x60;total&#x60; count in the response matches the grouping mode. (optional, default to 'recipient')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['viewMailLog'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function viewMailLogAsyncWithHttpInfo($id = null, $origin = null, $mx = null, $from = null, $to = null, $subject = null, $mailid = null, $messageId = null, $replyto = null, $headerfrom = null, $delivered = null, $skip = 0, $limit = 100, $startDate = null, $endDate = null, string $contentType = self::contentTypes['viewMailLog'][0])
+    public function viewMailLogAsyncWithHttpInfo($id = null, $origin = null, $mx = null, $from = null, $to = null, $subject = null, $mailid = null, $messageId = null, $replyto = null, $headerfrom = null, $delivered = null, $skip = 0, $limit = 100, $startDate = null, $endDate = null, $sort = 'time', $dir = 'desc', $groupby = 'recipient', string $contentType = self::contentTypes['viewMailLog'][0])
     {
         $returnType = '\Interserver\Mailbaby\Model\MailLog';
-        $request = $this->viewMailLogRequest($id, $origin, $mx, $from, $to, $subject, $mailid, $messageId, $replyto, $headerfrom, $delivered, $skip, $limit, $startDate, $endDate, $contentType);
+        $request = $this->viewMailLogRequest($id, $origin, $mx, $from, $to, $subject, $mailid, $messageId, $replyto, $headerfrom, $delivered, $skip, $limit, $startDate, $endDate, $sort, $dir, $groupby, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -681,20 +693,23 @@ class HistoryApi
      * @param  string|null $to Filter by SMTP envelope &#x60;RCPT TO&#x60; address (exact match).  This is the delivery address used by the relay and may differ from the &#x60;To:&#x60; header when BCC recipients are involved. (optional)
      * @param  string|null $subject Filter by email &#x60;Subject&#x60; header (exact match).  To search for a substring, include it in the full subject text. (optional)
      * @param  string|null $mailid Filter by the relay-assigned mail ID string (exact match).  This corresponds to the &#x60;id&#x60; field in &#x60;MailLogEntry&#x60; and to the &#x60;text&#x60; value returned by the sending endpoints on success.  Format is an 18–19 character hexadecimal string such as &#x60;185997065c60008840&#x60;. (optional)
-     * @param  string|null $messageId Filter by the &#x60;Message-ID&#x60; email header using a substring (case-insensitive) match.  The &#x60;Message-ID&#x60; is assigned by the sending mail client and is visible in the &#x60;messageId&#x60; field of &#x60;MailLogEntry&#x60;.  Useful when you know the message ID generated by your application but not the relay &#x60;mailid&#x60;. (optional)
+     * @param  string|null $messageId Filter by the &#x60;Message-ID&#x60; email header using a substring (case-insensitive) match. The &#x60;Message-ID&#x60; is assigned by the sending mail client and is visible in the &#x60;messageId&#x60; field of &#x60;MailLogEntry&#x60;.  Useful when you know the message ID generated by your application but not the relay &#x60;mailid&#x60;. (optional)
      * @param  string|null $replyto Filter by the &#x60;Reply-To&#x60; message header address (exact match).  Only returns messages where this header was explicitly set. (optional)
      * @param  string|null $headerfrom Filter by the &#x60;From&#x60; message header address (exact match).  This is the human-visible sender address and may differ from the SMTP envelope &#x60;from&#x60; parameter when sending on behalf of another address. (optional)
      * @param  int|null $delivered Filter by delivery status.  &#x60;1&#x60; returns only messages that were successfully delivered to the destination MX.  &#x60;0&#x60; returns messages that are still queued, deferred, or failed.  Omit to return all messages regardless of delivery status. (optional)
      * @param  int|null $skip Number of records to skip for pagination.  Use in combination with &#x60;limit&#x60; to page through large result sets.  Defaults to &#x60;0&#x60; (no skip). (optional, default to 0)
      * @param  int|null $limit Maximum number of records to return per page.  Defaults to &#x60;100&#x60;. Maximum allowed value is &#x60;10000&#x60;.  The response also includes a &#x60;total&#x60; field with the full matched count so you can calculate the number of pages. (optional, default to 100)
-     * @param  int|null $startDate Earliest date to include, as a Unix timestamp (seconds since epoch). Messages with a &#x60;time&#x60; value **greater than or equal to** this value will be included. (optional)
-     * @param  int|null $endDate Latest date to include, as a Unix timestamp (seconds since epoch). Messages with a &#x60;time&#x60; value **less than or equal to** this value will be included. (optional)
+     * @param  \Interserver\Mailbaby\Model\ViewMailLogStartDateParameter|null $startDate Earliest date to include.  Accepts either a Unix timestamp (integer seconds since epoch) or a date string parseable by &#x60;strtotime()&#x60; such as &#x60;2024-01-15&#x60; or &#x60;last monday&#x60;.  Messages with a &#x60;time&#x60; value **greater than or equal to** this value will be included. (optional)
+     * @param  \Interserver\Mailbaby\Model\ViewMailLogStartDateParameter|null $endDate Latest date to include.  Accepts either a Unix timestamp (integer seconds since epoch) or a date string parseable by &#x60;strtotime()&#x60; such as &#x60;2024-01-31&#x60; or &#x60;yesterday&#x60;. Messages with a &#x60;time&#x60; value **less than or equal to** this value will be included. (optional)
+     * @param  string|null $sort Field to sort results by.  Currently only &#x60;time&#x60; is supported (sorts by internal row ID which corresponds to chronological order). (optional, default to 'time')
+     * @param  string|null $dir Sort direction.  &#x60;desc&#x60; returns newest first (default), &#x60;asc&#x60; returns oldest first. (optional, default to 'desc')
+     * @param  string|null $groupby Controls how results are grouped.  &#x60;recipient&#x60; (default) returns one row per delivery attempt — a message sent to 4 recipients produces 4 rows, each with its own &#x60;recipient&#x60;, &#x60;delivered&#x60;, &#x60;response&#x60;, and delivery metadata.  &#x60;message&#x60; collapses to one row per unique message ID; delivery-level fields will reflect one arbitrary recipient per message.  The &#x60;total&#x60; count in the response matches the grouping mode. (optional, default to 'recipient')
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['viewMailLog'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function viewMailLogRequest($id = null, $origin = null, $mx = null, $from = null, $to = null, $subject = null, $mailid = null, $messageId = null, $replyto = null, $headerfrom = null, $delivered = null, $skip = 0, $limit = 100, $startDate = null, $endDate = null, string $contentType = self::contentTypes['viewMailLog'][0])
+    public function viewMailLogRequest($id = null, $origin = null, $mx = null, $from = null, $to = null, $subject = null, $mailid = null, $messageId = null, $replyto = null, $headerfrom = null, $delivered = null, $skip = 0, $limit = 100, $startDate = null, $endDate = null, $sort = 'time', $dir = 'desc', $groupby = 'recipient', string $contentType = self::contentTypes['viewMailLog'][0])
     {
 
 
@@ -725,20 +740,11 @@ class HistoryApi
             throw new \InvalidArgumentException('invalid value for "$limit" when calling HistoryApi.viewMailLog, must be bigger than or equal to 1.');
         }
         
-        if ($startDate !== null && $startDate > 9999999999) {
-            throw new \InvalidArgumentException('invalid value for "$startDate" when calling HistoryApi.viewMailLog, must be smaller than or equal to 9999999999.');
-        }
-        if ($startDate !== null && $startDate < 0) {
-            throw new \InvalidArgumentException('invalid value for "$startDate" when calling HistoryApi.viewMailLog, must be bigger than or equal to 0.');
-        }
-        
-        if ($endDate !== null && $endDate > 9999999999) {
-            throw new \InvalidArgumentException('invalid value for "$endDate" when calling HistoryApi.viewMailLog, must be smaller than or equal to 9999999999.');
-        }
-        if ($endDate !== null && $endDate < 0) {
-            throw new \InvalidArgumentException('invalid value for "$endDate" when calling HistoryApi.viewMailLog, must be bigger than or equal to 0.');
-        }
-        
+
+
+
+
+
 
         $resourcePath = '/mail/log';
         $formParams = [];
@@ -868,7 +874,7 @@ class HistoryApi
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $startDate,
             'startDate', // param base name
-            'integer', // openApiType
+            'int|string', // openApiType
             'form', // style
             true, // explode
             false // required
@@ -877,7 +883,34 @@ class HistoryApi
         $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
             $endDate,
             'endDate', // param base name
-            'integer', // openApiType
+            'int|string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $sort,
+            'sort', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $dir,
+            'dir', // param base name
+            'string', // openApiType
+            'form', // style
+            true, // explode
+            false // required
+        ) ?? []);
+        // query params
+        $queryParams = array_merge($queryParams, ObjectSerializer::toQueryValue(
+            $groupby,
+            'groupby', // param base name
+            'string', // openApiType
             'form', // style
             true, // explode
             false // required

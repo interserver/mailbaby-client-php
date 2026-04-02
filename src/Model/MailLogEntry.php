@@ -13,7 +13,7 @@
 /**
  * MailBaby Email Delivery and Management Service API
  *
- * **Send emails fast and with confidence through our easy to use [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) API interface.**  # Overview  This is the API interface to the [Mail Baby](https://mail.baby/) Mail services provided by [InterServer](https://www.interserver.net). To use this service you must have an account with us at [my.interserver.net](https://my.interserver.net).  # Mail Orders  Every sending account in MailBaby is backed by a **Mail Order** — a provisioned sending credential with a numeric `id` and a corresponding SMTP username (`mb<id>`).  Most calls accept an optional `id` parameter; when omitted the API automatically selects the first active order on your account. Use `GET /mail` to list all orders, and `GET /mail/{id}` to inspect a single order including its current SMTP password.  # Sending Email  Three sending methods are available depending on your use-case: | Endpoint | Best for | |----------|----------| | `POST /mail/send` | Simple single-recipient messages | | `POST /mail/advsend` | Multiple recipients, CC/BCC, attachments, named contacts | | `POST /mail/rawsend` | Pre-built RFC 822 messages (e.g. DKIM-signed payloads) |  After a successful send each endpoint returns a `GenericResponse` whose `text` field contains the **transaction ID** assigned by the relay.  This ID can later be matched against entries in `GET /mail/log` via the `mailid` query parameter.  # Filtering & Logs  `GET /mail/log` provides paginated access to every message accepted by the relay for your account.  Combine any of the query parameters to narrow results — e.g. `from`, `to`, `subject`, `messageId`, `origin`, `mx`, `startDate`/`endDate`, and `delivered`.  # Blocking  Two independent mechanisms exist for suppressing unwanted email: - **Block lists** (`GET /mail/blocks`, `POST /mail/blocks/delete`) — addresses flagged by the   system spam filters (LOCAL_BL_RCPT / MBTRAP rules in rspamd, and suspicious subjects). - **Deny rules** (`GET /mail/rules`, `POST /mail/rules`, `DELETE /mail/rules/{ruleId}`) —   custom rules you configure to reject specific senders, domains, destination addresses, or   subject-line prefixes before a message is even attempted.   # Authentication  In order to use most of the API calls you must pass credentials from the [my.interserver.net](https://my.interserver.net/) site. We support several different authentication methods but the preferred method is to use the **API Key** which you can get from the [Account Security](https://my.interserver.net/account_security) page. Pass your key in the `X-API-KEY` HTTP request header for every protected call.
+ * **Send emails fast and with confidence through our easy to use [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) API interface.**  # Overview  This is the API interface to the [Mail Baby](https://mail.baby/) Mail services provided by [InterServer](https://www.interserver.net). To use this service you must have an account with us at [my.interserver.net](https://my.interserver.net).  # Mail Orders  Every sending account in MailBaby is backed by a **Mail Order** — a provisioned sending credential with a numeric `id` and a corresponding SMTP username (`mb<id>`).  Most calls accept an optional `id` parameter; when omitted the API automatically selects the first active order on your account. Use `GET /mail` to list all orders, and `GET /mail/{id}` to inspect a single order including its current SMTP password.  # Sending Email  Three sending methods are available depending on your use-case: | Endpoint | Best for | |----------|----------| | `POST /mail/send` | Simple single-recipient messages | | `POST /mail/advsend` | Multiple recipients, CC/BCC, attachments, named contacts | | `POST /mail/rawsend` | Pre-built RFC 822 messages (e.g. DKIM-signed payloads) |  After a successful send each endpoint returns a `GenericResponse` whose `text` field contains the **transaction ID** assigned by the relay.  This ID can later be matched against entries in `GET /mail/log` via the `mailid` query parameter.  # Filtering & Logs  `GET /mail/log` provides paginated access to every message accepted by the relay for your account. Combine any of the query parameters to narrow results — e.g. `from`, `to`, `subject`, `messageId`, `origin`, `mx`, `startDate`/`endDate`, and `delivered`.  # Blocking  Two independent mechanisms exist for suppressing unwanted email: - **Block lists** (`GET /mail/blocks`, `POST /mail/blocks/delete`) — addresses flagged by the   system spam filters (LOCAL_BL_RCPT / MBTRAP rules in rspamd, and suspicious subjects). - **Deny rules** (`GET /mail/rules`, `POST /mail/rules`, `DELETE /mail/rules/{ruleId}`) —   custom rules you configure to reject specific senders, domains, destination addresses, or   subject-line prefixes before a message is even attempted.   # Authentication  In order to use most of the API calls you must pass credentials from the [my.interserver.net](https://my.interserver.net/) site. We support several different authentication methods but the preferred method is to use the **API Key** which you can get from the [Account Security](https://my.interserver.net/account_security) page. Pass your key in the `X-API-KEY` HTTP request header for every protected call.
  *
  * The version of the OpenAPI document: 1.4.0
  * Contact: support@interserver.net
@@ -75,6 +75,7 @@ class MailLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         'bodySize' => 'int',
         'seq' => 'int',
         'delivered' => 'int',
+        'code' => 'int',
         'response' => 'string',
         'recipient' => 'string',
         'domain' => 'string',
@@ -109,6 +110,7 @@ class MailLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         'bodySize' => null,
         'seq' => null,
         'delivered' => null,
+        'code' => null,
         'response' => null,
         'recipient' => null,
         'domain' => null,
@@ -141,6 +143,7 @@ class MailLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         'bodySize' => true,
         'seq' => true,
         'delivered' => true,
+        'code' => true,
         'response' => true,
         'recipient' => true,
         'domain' => true,
@@ -253,6 +256,7 @@ class MailLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         'bodySize' => 'bodySize',
         'seq' => 'seq',
         'delivered' => 'delivered',
+        'code' => 'code',
         'response' => 'response',
         'recipient' => 'recipient',
         'domain' => 'domain',
@@ -285,6 +289,7 @@ class MailLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         'bodySize' => 'setBodySize',
         'seq' => 'setSeq',
         'delivered' => 'setDelivered',
+        'code' => 'setCode',
         'response' => 'setResponse',
         'recipient' => 'setRecipient',
         'domain' => 'setDomain',
@@ -317,6 +322,7 @@ class MailLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         'bodySize' => 'getBodySize',
         'seq' => 'getSeq',
         'delivered' => 'getDelivered',
+        'code' => 'getCode',
         'response' => 'getResponse',
         'recipient' => 'getRecipient',
         'domain' => 'getDomain',
@@ -400,6 +406,7 @@ class MailLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('bodySize', $data ?? [], null);
         $this->setIfExists('seq', $data ?? [], null);
         $this->setIfExists('delivered', $data ?? [], null);
+        $this->setIfExists('code', $data ?? [], null);
         $this->setIfExists('response', $data ?? [], null);
         $this->setIfExists('recipient', $data ?? [], null);
         $this->setIfExists('domain', $data ?? [], null);
@@ -443,6 +450,14 @@ class MailLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         if ($this->container['id'] === null) {
             $invalidProperties[] = "'id' can't be null";
         }
+        if ((mb_strlen($this->container['id']) > 19)) {
+            $invalidProperties[] = "invalid value for 'id', the character length must be smaller than or equal to 19.";
+        }
+
+        if ((mb_strlen($this->container['id']) < 18)) {
+            $invalidProperties[] = "invalid value for 'id', the character length must be bigger than or equal to 18.";
+        }
+
         if ($this->container['from'] === null) {
             $invalidProperties[] = "'from' can't be null";
         }
@@ -531,6 +546,13 @@ class MailLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
         if (is_null($id)) {
             throw new \InvalidArgumentException('non-nullable id cannot be null');
         }
+        if ((mb_strlen($id) > 19)) {
+            throw new \InvalidArgumentException('invalid length for $id when calling MailLogEntry., must be smaller than or equal to 19.');
+        }
+        if ((mb_strlen($id) < 18)) {
+            throw new \InvalidArgumentException('invalid length for $id when calling MailLogEntry., must be bigger than or equal to 18.');
+        }
+
         $this->container['id'] = $id;
 
         return $this;
@@ -952,6 +974,40 @@ class MailLogEntry implements ModelInterface, ArrayAccess, \JsonSerializable
             }
         }
         $this->container['delivered'] = $delivered;
+
+        return $this;
+    }
+
+    /**
+     * Gets code
+     *
+     * @return int|null
+     */
+    public function getCode()
+    {
+        return $this->container['code'];
+    }
+
+    /**
+     * Sets code
+     *
+     * @param int|null $code The SMTP response code from the destination MX server (e.g. `250` for success, `550` for permanent failure).
+     *
+     * @return self
+     */
+    public function setCode($code)
+    {
+        if (is_null($code)) {
+            array_push($this->openAPINullablesSetToNull, 'code');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('code', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['code'] = $code;
 
         return $this;
     }

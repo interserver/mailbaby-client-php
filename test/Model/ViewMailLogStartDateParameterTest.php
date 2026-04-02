@@ -1,6 +1,6 @@
 <?php
 /**
- * MailStatsVolumeTest
+ * ViewMailLogStartDateParameterTest
  *
  * PHP version 8.1
  *
@@ -32,15 +32,15 @@ namespace Interserver\Mailbaby\Test\Model;
 use PHPUnit\Framework\TestCase;
 
 /**
- * MailStatsVolumeTest Class Doc Comment
+ * ViewMailLogStartDateParameterTest Class Doc Comment
  *
  * @category    Class
- * @description Top-500 breakdown of message counts within the selected time window, grouped by originating IP, destination address, and sender address.
+ * @description ViewMailLogStartDateParameter
  * @package     Interserver\Mailbaby
  * @author      OpenAPI Generator team
  * @link        https://openapi-generator.tech
  */
-class MailStatsVolumeTest extends TestCase
+class ViewMailLogStartDateParameterTest extends TestCase
 {
 
     /**
@@ -72,36 +72,9 @@ class MailStatsVolumeTest extends TestCase
     }
 
     /**
-     * Test "MailStatsVolume"
+     * Test "ViewMailLogStartDateParameter"
      */
-    public function testMailStatsVolume()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "to"
-     */
-    public function testPropertyTo()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "from"
-     */
-    public function testPropertyFrom()
-    {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
-    }
-
-    /**
-     * Test attribute "ip"
-     */
-    public function testPropertyIp()
+    public function testViewMailLogStartDateParameter()
     {
         // TODO: implement
         self::markTestIncomplete('Not implemented');

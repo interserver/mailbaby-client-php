@@ -12,7 +12,7 @@
 /**
  * MailBaby Email Delivery and Management Service API
  *
- * **Send emails fast and with confidence through our easy to use [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) API interface.**  # Overview  This is the API interface to the [Mail Baby](https://mail.baby/) Mail services provided by [InterServer](https://www.interserver.net). To use this service you must have an account with us at [my.interserver.net](https://my.interserver.net).  # Mail Orders  Every sending account in MailBaby is backed by a **Mail Order** — a provisioned sending credential with a numeric `id` and a corresponding SMTP username (`mb<id>`).  Most calls accept an optional `id` parameter; when omitted the API automatically selects the first active order on your account. Use `GET /mail` to list all orders, and `GET /mail/{id}` to inspect a single order including its current SMTP password.  # Sending Email  Three sending methods are available depending on your use-case: | Endpoint | Best for | |----------|----------| | `POST /mail/send` | Simple single-recipient messages | | `POST /mail/advsend` | Multiple recipients, CC/BCC, attachments, named contacts | | `POST /mail/rawsend` | Pre-built RFC 822 messages (e.g. DKIM-signed payloads) |  After a successful send each endpoint returns a `GenericResponse` whose `text` field contains the **transaction ID** assigned by the relay.  This ID can later be matched against entries in `GET /mail/log` via the `mailid` query parameter.  # Filtering & Logs  `GET /mail/log` provides paginated access to every message accepted by the relay for your account.  Combine any of the query parameters to narrow results — e.g. `from`, `to`, `subject`, `messageId`, `origin`, `mx`, `startDate`/`endDate`, and `delivered`.  # Blocking  Two independent mechanisms exist for suppressing unwanted email: - **Block lists** (`GET /mail/blocks`, `POST /mail/blocks/delete`) — addresses flagged by the   system spam filters (LOCAL_BL_RCPT / MBTRAP rules in rspamd, and suspicious subjects). - **Deny rules** (`GET /mail/rules`, `POST /mail/rules`, `DELETE /mail/rules/{ruleId}`) —   custom rules you configure to reject specific senders, domains, destination addresses, or   subject-line prefixes before a message is even attempted.   # Authentication  In order to use most of the API calls you must pass credentials from the [my.interserver.net](https://my.interserver.net/) site. We support several different authentication methods but the preferred method is to use the **API Key** which you can get from the [Account Security](https://my.interserver.net/account_security) page. Pass your key in the `X-API-KEY` HTTP request header for every protected call.
+ * **Send emails fast and with confidence through our easy to use [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) API interface.**  # Overview  This is the API interface to the [Mail Baby](https://mail.baby/) Mail services provided by [InterServer](https://www.interserver.net). To use this service you must have an account with us at [my.interserver.net](https://my.interserver.net).  # Mail Orders  Every sending account in MailBaby is backed by a **Mail Order** — a provisioned sending credential with a numeric `id` and a corresponding SMTP username (`mb<id>`).  Most calls accept an optional `id` parameter; when omitted the API automatically selects the first active order on your account. Use `GET /mail` to list all orders, and `GET /mail/{id}` to inspect a single order including its current SMTP password.  # Sending Email  Three sending methods are available depending on your use-case: | Endpoint | Best for | |----------|----------| | `POST /mail/send` | Simple single-recipient messages | | `POST /mail/advsend` | Multiple recipients, CC/BCC, attachments, named contacts | | `POST /mail/rawsend` | Pre-built RFC 822 messages (e.g. DKIM-signed payloads) |  After a successful send each endpoint returns a `GenericResponse` whose `text` field contains the **transaction ID** assigned by the relay.  This ID can later be matched against entries in `GET /mail/log` via the `mailid` query parameter.  # Filtering & Logs  `GET /mail/log` provides paginated access to every message accepted by the relay for your account. Combine any of the query parameters to narrow results — e.g. `from`, `to`, `subject`, `messageId`, `origin`, `mx`, `startDate`/`endDate`, and `delivered`.  # Blocking  Two independent mechanisms exist for suppressing unwanted email: - **Block lists** (`GET /mail/blocks`, `POST /mail/blocks/delete`) — addresses flagged by the   system spam filters (LOCAL_BL_RCPT / MBTRAP rules in rspamd, and suspicious subjects). - **Deny rules** (`GET /mail/rules`, `POST /mail/rules`, `DELETE /mail/rules/{ruleId}`) —   custom rules you configure to reject specific senders, domains, destination addresses, or   subject-line prefixes before a message is even attempted.   # Authentication  In order to use most of the API calls you must pass credentials from the [my.interserver.net](https://my.interserver.net/) site. We support several different authentication methods but the preferred method is to use the **API Key** which you can get from the [Account Security](https://my.interserver.net/account_security) page. Pass your key in the `X-API-KEY` HTTP request header for every protected call.
  *
  * The version of the OpenAPI document: 1.4.0
  * Contact: support@interserver.net
@@ -456,11 +456,11 @@ class SendingApi
      *
      * @param  string $subject The subject line of the email. (required)
      * @param  string $body The email body.  If the string contains any HTML tags the message is automatically sent as &#x60;text/html&#x60;; otherwise it is sent as &#x60;text/plain&#x60;. (required)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressTypes $from from (required)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes $to to (required)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $replyto replyto (optional)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $cc cc (optional)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $bcc bcc (optional)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressTypes $from The sender address.  Accepts a plain email string, an RFC 822 named string (&#x60;\\\&quot;Name &lt;email&gt;\\\&quot;&#x60;), or a &#x60;{\\\&quot;email\\\&quot;: \\\&quot;...\\\&quot;, \\\&quot;name\\\&quot;: \\\&quot;...\\\&quot;}&#x60; object. (required)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes $to One or more destination addresses.  Accepts a comma-separated RFC 822 string or an array of contact objects. (required)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $replyto Optional.  One or more addresses to set as the &#x60;Reply-To&#x60; header. When recipients reply to the message their email client will address the reply to these addresses instead of &#x60;from&#x60;. (optional)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $cc Optional.  Carbon-copy recipients.  These addresses are listed in the &#x60;Cc&#x60; header and are visible to all recipients. (optional)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $bcc Optional.  Blind-carbon-copy recipients.  These addresses receive the message but are not listed in any visible header. (optional)
      * @param  \Interserver\Mailbaby\Model\MailAttachment[]|null $attachments Optional list of file attachments.  Each file must be base64-encoded. Include &#x60;filename&#x60; so recipients see a meaningful attachment name. (optional)
      * @param  int|null $id Optional numeric ID of the mail order to send through.  If omitted the first active order on your account is used automatically.  Valid IDs are returned by &#x60;GET /mail&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendAdvMail'] to see the possible values for this operation
@@ -482,11 +482,11 @@ class SendingApi
      *
      * @param  string $subject The subject line of the email. (required)
      * @param  string $body The email body.  If the string contains any HTML tags the message is automatically sent as &#x60;text/html&#x60;; otherwise it is sent as &#x60;text/plain&#x60;. (required)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressTypes $from (required)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes $to (required)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $replyto (optional)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $cc (optional)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $bcc (optional)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressTypes $from The sender address.  Accepts a plain email string, an RFC 822 named string (&#x60;\\\&quot;Name &lt;email&gt;\\\&quot;&#x60;), or a &#x60;{\\\&quot;email\\\&quot;: \\\&quot;...\\\&quot;, \\\&quot;name\\\&quot;: \\\&quot;...\\\&quot;}&#x60; object. (required)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes $to One or more destination addresses.  Accepts a comma-separated RFC 822 string or an array of contact objects. (required)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $replyto Optional.  One or more addresses to set as the &#x60;Reply-To&#x60; header. When recipients reply to the message their email client will address the reply to these addresses instead of &#x60;from&#x60;. (optional)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $cc Optional.  Carbon-copy recipients.  These addresses are listed in the &#x60;Cc&#x60; header and are visible to all recipients. (optional)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $bcc Optional.  Blind-carbon-copy recipients.  These addresses receive the message but are not listed in any visible header. (optional)
      * @param  \Interserver\Mailbaby\Model\MailAttachment[]|null $attachments Optional list of file attachments.  Each file must be base64-encoded. Include &#x60;filename&#x60; so recipients see a meaningful attachment name. (optional)
      * @param  int|null $id Optional numeric ID of the mail order to send through.  If omitted the first active order on your account is used automatically.  Valid IDs are returned by &#x60;GET /mail&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendAdvMail'] to see the possible values for this operation
@@ -617,11 +617,11 @@ class SendingApi
      *
      * @param  string $subject The subject line of the email. (required)
      * @param  string $body The email body.  If the string contains any HTML tags the message is automatically sent as &#x60;text/html&#x60;; otherwise it is sent as &#x60;text/plain&#x60;. (required)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressTypes $from (required)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes $to (required)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $replyto (optional)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $cc (optional)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $bcc (optional)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressTypes $from The sender address.  Accepts a plain email string, an RFC 822 named string (&#x60;\\\&quot;Name &lt;email&gt;\\\&quot;&#x60;), or a &#x60;{\\\&quot;email\\\&quot;: \\\&quot;...\\\&quot;, \\\&quot;name\\\&quot;: \\\&quot;...\\\&quot;}&#x60; object. (required)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes $to One or more destination addresses.  Accepts a comma-separated RFC 822 string or an array of contact objects. (required)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $replyto Optional.  One or more addresses to set as the &#x60;Reply-To&#x60; header. When recipients reply to the message their email client will address the reply to these addresses instead of &#x60;from&#x60;. (optional)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $cc Optional.  Carbon-copy recipients.  These addresses are listed in the &#x60;Cc&#x60; header and are visible to all recipients. (optional)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $bcc Optional.  Blind-carbon-copy recipients.  These addresses receive the message but are not listed in any visible header. (optional)
      * @param  \Interserver\Mailbaby\Model\MailAttachment[]|null $attachments Optional list of file attachments.  Each file must be base64-encoded. Include &#x60;filename&#x60; so recipients see a meaningful attachment name. (optional)
      * @param  int|null $id Optional numeric ID of the mail order to send through.  If omitted the first active order on your account is used automatically.  Valid IDs are returned by &#x60;GET /mail&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendAdvMail'] to see the possible values for this operation
@@ -646,11 +646,11 @@ class SendingApi
      *
      * @param  string $subject The subject line of the email. (required)
      * @param  string $body The email body.  If the string contains any HTML tags the message is automatically sent as &#x60;text/html&#x60;; otherwise it is sent as &#x60;text/plain&#x60;. (required)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressTypes $from (required)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes $to (required)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $replyto (optional)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $cc (optional)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $bcc (optional)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressTypes $from The sender address.  Accepts a plain email string, an RFC 822 named string (&#x60;\\\&quot;Name &lt;email&gt;\\\&quot;&#x60;), or a &#x60;{\\\&quot;email\\\&quot;: \\\&quot;...\\\&quot;, \\\&quot;name\\\&quot;: \\\&quot;...\\\&quot;}&#x60; object. (required)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes $to One or more destination addresses.  Accepts a comma-separated RFC 822 string or an array of contact objects. (required)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $replyto Optional.  One or more addresses to set as the &#x60;Reply-To&#x60; header. When recipients reply to the message their email client will address the reply to these addresses instead of &#x60;from&#x60;. (optional)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $cc Optional.  Carbon-copy recipients.  These addresses are listed in the &#x60;Cc&#x60; header and are visible to all recipients. (optional)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $bcc Optional.  Blind-carbon-copy recipients.  These addresses receive the message but are not listed in any visible header. (optional)
      * @param  \Interserver\Mailbaby\Model\MailAttachment[]|null $attachments Optional list of file attachments.  Each file must be base64-encoded. Include &#x60;filename&#x60; so recipients see a meaningful attachment name. (optional)
      * @param  int|null $id Optional numeric ID of the mail order to send through.  If omitted the first active order on your account is used automatically.  Valid IDs are returned by &#x60;GET /mail&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendAdvMail'] to see the possible values for this operation
@@ -704,11 +704,11 @@ class SendingApi
      *
      * @param  string $subject The subject line of the email. (required)
      * @param  string $body The email body.  If the string contains any HTML tags the message is automatically sent as &#x60;text/html&#x60;; otherwise it is sent as &#x60;text/plain&#x60;. (required)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressTypes $from (required)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes $to (required)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $replyto (optional)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $cc (optional)
-     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $bcc (optional)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressTypes $from The sender address.  Accepts a plain email string, an RFC 822 named string (&#x60;\\\&quot;Name &lt;email&gt;\\\&quot;&#x60;), or a &#x60;{\\\&quot;email\\\&quot;: \\\&quot;...\\\&quot;, \\\&quot;name\\\&quot;: \\\&quot;...\\\&quot;}&#x60; object. (required)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes $to One or more destination addresses.  Accepts a comma-separated RFC 822 string or an array of contact objects. (required)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $replyto Optional.  One or more addresses to set as the &#x60;Reply-To&#x60; header. When recipients reply to the message their email client will address the reply to these addresses instead of &#x60;from&#x60;. (optional)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $cc Optional.  Carbon-copy recipients.  These addresses are listed in the &#x60;Cc&#x60; header and are visible to all recipients. (optional)
+     * @param  \Interserver\Mailbaby\Model\EmailAddressesTypes|null $bcc Optional.  Blind-carbon-copy recipients.  These addresses receive the message but are not listed in any visible header. (optional)
      * @param  \Interserver\Mailbaby\Model\MailAttachment[]|null $attachments Optional list of file attachments.  Each file must be base64-encoded. Include &#x60;filename&#x60; so recipients see a meaningful attachment name. (optional)
      * @param  int|null $id Optional numeric ID of the mail order to send through.  If omitted the first active order on your account is used automatically.  Valid IDs are returned by &#x60;GET /mail&#x60;. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['sendAdvMail'] to see the possible values for this operation
