@@ -24,7 +24,7 @@
         "ext-curl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "guzzlehttp/guzzle": "^7.3",
+        "guzzlehttp/guzzle": "^7.15.2",
         "guzzlehttp/psr7": "^1.7 || ^2.0"
     },
     "require-dev": {
@@ -32,9 +32,13 @@
         "friendsofphp/php-cs-fixer": "^3.5"
     },
     "autoload": {
-        "psr-4": { "Interserver\\Mailbaby\\" : "src/" }
+        "psr-4": {
+            "Interserver\\Mailbaby\\": "src/"
+        }
     },
     "autoload-dev": {
-        "psr-4": { "Interserver\\Mailbaby\\Test\\" : "test/" }
+        "psr-4": {
+            "Interserver\\Mailbaby\\Test\\": "test/"
+        }
     }
 }
